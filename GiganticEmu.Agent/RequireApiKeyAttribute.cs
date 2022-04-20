@@ -24,7 +24,7 @@ public class RequireApiKeyAttribute : Attribute, IAsyncActionFilter
 
         var config = context.HttpContext.RequestServices.GetRequiredService<IOptions<AgentConfiguration>>();
 
-        if (!config.Value.ApiKey.Equals(extractedApiKey))
+        if (config != null && !config.Value.ApiKey.Equals(extractedApiKey))
         {
             context.Result = new ContentResult()
             {
@@ -32,7 +32,7 @@ public class RequireApiKeyAttribute : Attribute, IAsyncActionFilter
             };
             return;
         }
-
         await next();
+
     }
 }
