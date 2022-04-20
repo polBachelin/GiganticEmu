@@ -14,12 +14,12 @@ namespace GiganticEmu.Shared.Backend
 
         public ApplicationDatabase CreateDbContext()
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             var builder = new DbContextOptionsBuilder<ApplicationDatabase>()
                 .UseNpgsql(Environment.GetEnvironmentVariable("CONNECTIONSTRINGS__POSTGRES")!, options =>
                 {
                     options.EnableRetryOnFailure();
                 });
-
             var db = new ApplicationDatabase(builder.Options);
 
             if (db.Database.GetPendingMigrations().Count() > 0)

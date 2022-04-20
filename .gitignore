@@ -6,3 +6,5 @@ config.json
 *.csproj.user
 .tye
 .vs
+.vscode
+tye_config.yaml
